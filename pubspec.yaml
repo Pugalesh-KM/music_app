@@ -39,6 +39,8 @@ dependencies:
   volume_controller: ^3.3.0
   pdf: ^3.11.3
   printing: ^5.14.2
+  provider: ^6.1.5
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

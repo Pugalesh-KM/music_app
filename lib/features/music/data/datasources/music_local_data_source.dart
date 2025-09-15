@@ -28,9 +28,7 @@ class MusicLocalDataSourceImpl extends MusicLocalDataSource {
           ),
         );
       }
-      final songs = await _musicService.scanDeviceForAudio();
-
-      await _musicService.setPlaylist(songs);
+      final songs = await _musicService.setPlaylist();
       return Right(MusicModel(data: songs));
 
     } catch (e) {

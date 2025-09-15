@@ -79,7 +79,7 @@ class SongTile extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: textTheme.bodyMedium?.copyWith(
-              color: isPlaying ? colorScheme.primary.withOpacity(0.7) : colorScheme.onSurface.withOpacity(0.5)
+              color: isPlaying ? colorScheme.primary.withValues(alpha:0.7) : colorScheme.onSurface.withValues(alpha:0.5)
           ),
         ),
         trailing: isPlaying
@@ -87,7 +87,7 @@ class SongTile extends StatelessWidget {
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: colorScheme.primary.withOpacity(0.2),
+                  color: colorScheme.primary.withValues(alpha:0.2),
                 ),
                 child: Icon(Icons.pause, color: colorScheme.primary, size: 24),
               )
