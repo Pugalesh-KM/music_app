@@ -3,4 +3,5 @@ class RoutesName{
   static const listMusicPath = '/listMusic';
   static const musicPath = '/music';
   static const settingsPath= '/settings';
+  static const musicPlayerPath= '/musicPlayer';
 }

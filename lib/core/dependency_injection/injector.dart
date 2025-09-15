@@ -13,7 +13,6 @@ import 'package:music_app/features/music/data/datasources/music_local_data_sourc
 import 'package:music_app/features/music/data/repositories/music_repository_impl.dart';
 import 'package:music_app/features/music/domain/repositories/music_repository.dart';
 import 'package:music_app/features/music/domain/usecases/music_use_case.dart';
-import 'package:music_app/features/music/presentation/cubit/music_cubit.dart';
 import 'package:music_app/shared/cubit/theme_cubit.dart';
 
 final injector = GetIt.instance;
@@ -35,6 +34,6 @@ Future<void> init() async {
     /// music
     ..registerLazySingleton<MusicLocalDataSource>(() => MusicLocalDataSourceImpl(injector()),)
     ..registerLazySingleton<MusicRepository>(() => MusicRepositoryImpl(injector()),)
-    ..registerLazySingleton<MusicUseCase>(() => MusicUseCase(injector()))
-    ..registerFactory<MusicCubit>(() => MusicCubit(injector()));
+    ..registerLazySingleton<MusicUseCases>(() => MusicUseCases(injector()));
+    // ..registerFactory<MusicCubit>(() => MusicCubit(injector()));
 }

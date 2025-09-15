@@ -13,7 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 part 'music_state.dart';
 
 class MusicCubit extends Cubit<MusicState> {
-  final MusicUseCase _useCase;
+  final MusicUseCases _useCase;
   final MusicService _musicService;
 
   Timer? _progressTimer;
@@ -31,16 +31,40 @@ class MusicCubit extends Cubit<MusicState> {
     : _musicService = GetIt.instance<MusicService>(),
       super(MusicInitial());
 
-  Future<void> checkPermissionAndScan() async {
-    final status = await Permission.storage.isGranted;
-    final status1 = await Permission.audio.isGranted;
 
-    if (status || status1) {
+  Future<void> requestPermissions() async{
+    final storageStatus = await Permission.storage.request();
+    final audioStatus = await Permission.audio.request();
+
+    if (storageStatus.isGranted || audioStatus.isGranted) {
+      await scanForSongs();
+    } else if (storageStatus.isPermanentlyDenied || audioStatus.isPermanentlyDenied) {
+      emit(MusicError("Permission permanently denied, please enable in settings"));
+      await openAppSettings();
+      Future.delayed(const Duration(seconds: 10), () async {
+        final storageStatus = await Permission.storage.status;
+        final audioStatus = await Permission.audio.status;
+
+        if (storageStatus.isGranted || audioStatus.isGranted) {
+          await scanForSongs();
+        } else {
+          emit(MusicError("Please allow permissions in settings"));
+        }
+      });
+    } else {
+      emit(MusicError("Permission denied"));
+    }
+  }
+  Future<void> checkPermissionAndScan() async {
+    final storageStatus = await Permission.storage.isGranted;
+    final audioStatus = await Permission.audio.isGranted;
+
+    if (storageStatus || audioStatus) {
       await scanForSongs();
     } else {
-      log("Storage permission $status : Audio permission $status1");
+      log("Storage permission $storageStatus : Audio permission $audioStatus");
       emit(
-        MusicError("Storage permission $status : Audio permission $status1"),
+        MusicError("Storage permission $storageStatus : Audio permission $audioStatus"),
       );
     }
   }
@@ -186,6 +210,10 @@ class MusicCubit extends Cubit<MusicState> {
     _emitUpdated(position: position);
   }
 
+  Future<void> shufflePlay() async {
+    await _musicService.shufflePlay();
+  }
+
   Future<void> dispose() async {
     _progressTimer?.cancel();
     _musicService.dispose();
@@ -196,7 +224,7 @@ class MusicCubit extends Cubit<MusicState> {
 
   @override
   Future<void> close() {
-    _songs = [];
+    _songs.clear();
     _progressTimer?.cancel();
     _musicService.dispose();
     _disposeListeners();

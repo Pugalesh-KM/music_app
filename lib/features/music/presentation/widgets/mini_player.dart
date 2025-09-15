@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:music_app/features/music/presentation/cubit/music_cubit.dart';
 import 'package:music_app/features/music/presentation/widgets/music_player.dart';
 
@@ -15,7 +16,7 @@ class MiniPlayer extends StatefulWidget {
 class _MiniPlayerState extends State<MiniPlayer> {
   @override
   Widget build(BuildContext context) {
-     final musicCubit = context.read<MusicCubit>();
+    final musicCubit = context.read<MusicCubit>();
      final theme = Theme.of(context);
      final colorScheme = theme.colorScheme;
     return BlocBuilder<MusicCubit, MusicState>(
@@ -28,9 +29,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
         return GestureDetector(
           onTap: () {
+            //context.push(RoutesName.musicPlayerPath);
             Navigator.of(context).push(
               PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => MusicPlayer(),
+                pageBuilder: (context, animation, secondaryAnimation) => BlocProvider.value(
+                  value: musicCubit,
+                  child: const MusicPlayer(),
+                ),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                   const begin = Offset(0, 1); // start from bottom
                   const end = Offset.zero;
@@ -97,7 +102,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onPrimary.withOpacity(0.7),
+                  color: colorScheme.onPrimary.withValues(alpha: 0.7),
                 ),
               ),
               trailing: Row(

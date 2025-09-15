@@ -17,7 +17,9 @@ class MusicPlayer extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return BlocBuilder<MusicCubit, MusicState>(
+    return BlocProvider.value(
+      value: musicCubit,
+  child: BlocBuilder<MusicCubit, MusicState>(
       builder: (context, state) {
         if (state is! MusicLoaded || state.currentIndex == null) {
           return Scaffold(
@@ -74,10 +76,10 @@ class MusicPlayer extends StatelessWidget {
                       width: state.isPlaying ? 300 : 180,
                       height: state.isPlaying ? 300 : 180,
                       decoration: BoxDecoration(
-                        color: colorScheme.onPrimary.withOpacity(0.7),
+                        color: colorScheme.onPrimary.withValues(alpha:0.7),
 
                         border: Border.all(
-                          color: colorScheme.onSurface.withOpacity(0.3),
+                          color: colorScheme.onSurface.withValues(alpha:0.3),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(32),
@@ -105,7 +107,7 @@ class MusicPlayer extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.headlineSmall?.copyWith(
-                      color: colorScheme.onBackground,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   SizedBox(height: 10),
@@ -115,7 +117,7 @@ class MusicPlayer extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onBackground.withOpacity(0.7),
+                      color: colorScheme.onSurface.withValues(alpha:0.7),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -125,7 +127,7 @@ class MusicPlayer extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onBackground.withOpacity(0.7),
+                      color: colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                   Spacer(),
@@ -146,7 +148,7 @@ class MusicPlayer extends StatelessWidget {
                           );
                         },
                         activeColor: colorScheme.primary,
-                        inactiveColor: colorScheme.onSurface.withOpacity(0.3),
+                        inactiveColor: colorScheme.onSurface.withValues(alpha:0.3),
                         thumbColor: colorScheme.primary,
                       ),
                       Padding(
@@ -157,13 +159,13 @@ class MusicPlayer extends StatelessWidget {
                             Text(
                               musicCubit.formatDuration(position),
                               style: theme.textTheme.bodySmall?.copyWith(
-                                color: colorScheme.onBackground,
+                                color: colorScheme.onSurface,
                               ),
                             ),
                             Text(
                               musicCubit.formatDuration(duration),
                               style: theme.textTheme.bodySmall?.copyWith(
-                                color: colorScheme.onBackground,
+                                color: colorScheme.onSurface,
                               ),
                             ),
                           ],
@@ -181,13 +183,13 @@ class MusicPlayer extends StatelessWidget {
                         iconSize: 30,
                         color: state.shuffleEnabled
                             ? colorScheme.primary
-                            : colorScheme.onBackground,
+                            : colorScheme.onSurface,
                       ),
                       IconButton(
                         onPressed: () => musicCubit.skipPrevious(),
                         icon: Icon(
                           Icons.skip_previous,
-                          color: colorScheme.onBackground,
+                          color: colorScheme.onSurface,
                         ),
                         iconSize: 40,
                       ),
@@ -195,7 +197,7 @@ class MusicPlayer extends StatelessWidget {
                         onPressed: () => musicCubit.playPause(),
                         icon: Icon(
                           state.isPlaying ? Icons.pause : Icons.play_arrow,
-                          color: colorScheme.onBackground,
+                          color: colorScheme.onSurface,
                         ),
                         iconSize: 40,
                       ),
@@ -203,7 +205,7 @@ class MusicPlayer extends StatelessWidget {
                         onPressed: () => musicCubit.skipNext(),
                         icon: Icon(
                           Icons.skip_next,
-                          color: colorScheme.onBackground,
+                          color: colorScheme.onSurface,
                         ),
                         iconSize: 40,
                       ),
@@ -222,7 +224,7 @@ class MusicPlayer extends StatelessWidget {
                           LoopMode.all => Icons.repeat,
                           LoopMode.one => Icons.repeat_one,
                         }),
-                        color: colorScheme.onBackground,
+                        color: colorScheme.onSurface,
                         iconSize: 30,
                       ),
                     ],
@@ -233,6 +235,7 @@ class MusicPlayer extends StatelessWidget {
           ),
         );
       },
-    );
+    ),
+);
   }
 }

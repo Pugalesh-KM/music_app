@@ -83,7 +83,7 @@ class _SongListWithAlphabetState extends State<SongListWithAlphabet> {
           width: 28,
           margin: const EdgeInsets.only(right: 4,top: 4,bottom: 4),
           decoration: BoxDecoration(
-          color: colorScheme.surface.withOpacity(0.7),
+          color: colorScheme.surface.withValues(alpha:0.7),
           borderRadius: BorderRadius.circular(16),
         ),
           child: Column(
