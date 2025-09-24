@@ -1,16 +1,50 @@
-# music_app
+# 🎵 Music App
 
-A new Flutter project.
+A Flutter-based music player application with support for audio and theming.  
+Built using **Flutter**, **BLoC**, and **Audio Service**.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- 🎶 Play, pause, and stop audio
+- 🔄 State management with **BLoC**
+- 🎨 Light & dark theme support
+- 📂 Dependency injection using `get_it`
+- 🛠️ Clean and modular architecture
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📦 Dependencies
+
+Key packages used in this project:
+
+- [`flutter_bloc`](https://pub.dev/packages/flutter_bloc)
+- [`get_it`](https://pub.dev/packages/get_it)
+- [`audio_service`](https://pub.dev/packages/audio_service)
+- [`just_audio`](https://pub.dev/packages/just_audio)
+
+---
+
+## 🏗️ Architecture
+
+The project follows **Clean Architecture + BLoC pattern**:
+
+- `core/` → Services, dependency injection, database, networking  
+- `features/` → App modules (search, player, etc.)  
+- `shared/` → Common widgets, models, and themes  
+
+
+## 📱 Download APK
+
+👉 [Click here to download Music App APK](https://github.com/Pugalesh-KM/music_app/blob/main/assets/apk/music_app.apk)
+
+---
+
+## ▶️ Getting Started
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/your-username/music_app.git
+cd music_app
+
