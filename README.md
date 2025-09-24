@@ -45,6 +45,6 @@ The project follows **Clean Architecture + BLoC pattern**:
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/music_app.git
+git clone https://github.com/Pugalesh-KM/music_app.git
 cd music_app
 
